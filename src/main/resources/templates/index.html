@@ -1,7 +1,80 @@
 <html>
-    <head><title>Home Page</title></head>
-    <body>
-        <h1>Hello !</h1>
-        <p>Welcome to <span th:text="${appName}">Our App</span></p>
-    </body>
+
+<head>
+    <title>Spend Analyzer</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+    <link href="webjars/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="/css/spend-analyzer.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+    <div class="container-fluid">
+        <nav class="navbar navbar-light bglight flex-column flex-md-row bd-navbar">
+            <span class="navbar-brand mb-0 h1">&nbsp;Welcome to <span th:text="${appName}">Our App</span></span>
+        </nav>
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="card">
+                    <div class="card-header">
+                        Daily Activities
+                    </div>
+                    <div class="card-body">
+                        <div id="piechart" class="charts"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="card">
+                    <div class="card-header">
+                        Add a new transaction
+                    </div>
+                    <div class="card-body">
+                        <form action="/transactions" method="POST" id="addTransactionForm" name="addTransactionForm">
+                            <div class="justify-content-center ajax-spinner" style="display:none;">
+                                <div class="spinner-border text-primary" role="status">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="category">Category</label>
+                                <input type="text" class="form-control" id="category" name="category"
+                                    aria-describedby="categoryHelp" placeholder="Enter transaction category">
+                                <small id="categoryHelp" class="form-text text-muted">Transaction category like
+                                    Groceries,
+                                    Suoermarket
+                                    etc.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <input type="text" class="form-control" id="description" name="description"
+                                    placeholder="Description" aria-describedby="descriptionHelp">
+                                <small id="descriptionHelp" class="form-text text-muted">Transaction description like
+                                    store
+                                    name
+                                    and
+                                    location</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="amount">Transaction amount</label>
+                                <input type="text" class="form-control" id="amount" name="amount"
+                                    placeholder="Transaction Amount" aria-describedby="amountHelp">
+                                <small id="descriptionHelp" class="form-text text-muted">Dollar amount.</small>
+                            </div>
+                            <button type="submit" class="btn btn-primary add-transaction-btn">Add</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<footer>
+    <script src="webjars/bootstrap/5.3.2/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="webjars/jquery/3.7.1/jquery.min.js" type="text/javascript"></script>
+    <script src="https://www.gstatic.com/charts/loader.js" type="text/javascript"></script>
+    <script src="/js/spend-analyzer.js" type="text/javascript"></script>
+</footer>
+
 </html>
