@@ -3,8 +3,7 @@ package com.iit.spendanalyzer.persistence.model;
 import java.time.ZonedDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
-
-import jakarta.persistence.Id;
+import org.springframework.data.annotation.CreatedDate;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -15,7 +14,7 @@ import lombok.Data;
 public class TransactionEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long ID;
 
     @Column(nullable = false)
@@ -30,6 +29,7 @@ public class TransactionEntity {
 
     @Column(nullable = false)
     @CreationTimestamp
+    @CreatedDate
     private ZonedDateTime date;
 
 }

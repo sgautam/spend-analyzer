@@ -1,4 +1,10 @@
 $(document).ready(function() {
+
+    let hideMessage = function (){
+        $(".error").remove();
+        $(".alert-info").hide();
+        $(".alert-danger").hide();
+    };
     
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawChart);
@@ -40,7 +46,21 @@ $(document).ready(function() {
 
     $('.add-transaction-btn').on('click', function(e){
         e.preventDefault();
-        
+        hideMessage();
+        $.post({
+            url: $('#addTransactionForm').attr('action'),
+            data: $('#addTransactionForm').serialize(),
+            success: function(data){
+                $('.alert-info').show();
+                $('.info-msg').before('<span class="error">Successfully added transaction for category [' + data.category + '].</span>');
+            },
+            error: function(error){
+                $('.alert-danger').show();
+                $('.error-msg').before('<span class="error">Failed to add a transaction... try again later.</span>');
+            }
+
+        });
+
     });
 
 });
