@@ -11,7 +11,7 @@ A demo project for college student to get started with credit card spend analyze
 
 3. Open a terminal and change to the project folder `$cd spend-analyzer`
 
-4. Run `$./gradlew clean build bootRun` for Mac
+4. Run `$./gradlew clean build bootRun` for Mac/Linux, for Windows you can just run `gradlew clean build bootRun`
 
 5. You can access your application using `http://localhost:8080`
 
