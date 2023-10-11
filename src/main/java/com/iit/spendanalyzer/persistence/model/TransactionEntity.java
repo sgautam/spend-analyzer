@@ -27,7 +27,7 @@ public class TransactionEntity {
     @Column(nullable = false)
     private double amount;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name="CREATEDDATE")
     @CreationTimestamp
     @CreatedDate
     private ZonedDateTime date;

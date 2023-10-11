@@ -24,7 +24,8 @@ public class SpendAnalyzerApplication {
         http
                 .authorizeHttpRequests((requests) -> requests
                                 .anyRequest().permitAll()
-                ).csrf(csrf -> csrf.disable());
+                ).csrf(csrf -> csrf.disable())
+                .headers(customizer -> customizer.disable());
 		return http.build();
     }
 }

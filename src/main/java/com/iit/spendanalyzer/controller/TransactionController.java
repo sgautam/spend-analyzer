@@ -8,8 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.iit.spendanalyzer.controller.model.CategoryCount;
 import com.iit.spendanalyzer.controller.model.Transaction;
 import com.iit.spendanalyzer.persistence.model.TransactionEntity;
 import com.iit.spendanalyzer.persistence.repo.TransactionRepository;
@@ -34,9 +36,19 @@ public class TransactionController {
 
     @GetMapping("/transactions")
     @ResponseBody
-    public List<TransactionEntity> findAll() {
+    public List<TransactionEntity> findAll(@RequestParam(name="category", defaultValue="all") String argCategory) {
+       if("all".equals(argCategory))
         return transactionRepository.findAll();
+
+        return transactionRepository.findTransactionEntitiesByCategoryOrderByDateDesc(argCategory);
     }
+
+    @GetMapping("/categories")
+    @ResponseBody
+    public List<CategoryCount> getTransactionCategories() {
+        return transactionRepository.countTotalTransactonsByCategory();
+    }
+
 
     @PostMapping("/transactions")
     @ResponseBody

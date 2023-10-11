@@ -1,4 +1,29 @@
-$(document).ready(function() {
+  $(document).ready(function() {
+  
+    function initTable (category) {
+        return $('#transactionTable').dataTable( {
+            "paginate": true,
+            "retrieve": true,
+            "ajax": {
+                "url": "/transactions",
+                "contentType": "application/json",
+                "type": "GET",
+                "data": function(d){
+                    d.category=category
+                },
+                "dataSrc": ''
+            },
+            "columns": [
+                { "data": 'id' },
+                { "data": 'category' },
+                { "data": 'description' },
+                { "data": 'amount' },
+                { "data": 'date' }
+            ]
+        });
+      }
+      
+    let table = initTable('all');
 
     let hideMessage = function (){
         $(".error").remove();
@@ -9,40 +34,50 @@ $(document).ready(function() {
     google.charts.load('current', {'packages':['corechart']});
     google.charts.setOnLoadCallback(drawChart);
 
-    function drawChart() {
+    let getCategories = function(categoryDataRow){
+        $.get({
+            url: "/categories",
+            async: false,
+            success: function(data){
+               let rows = [];
+               $.each(data, function(idx, value){
+                    rows.push([value.category, value.count])
+               });
+               categoryDataRow.addRows(rows);
+            },
+            error: function(error){
+                $('.alert-danger').show();
+                $('.error-msg').before('<span class="error">Failed to add a transaction... try again later.</span>');
+            }
+        });
 
-    var data = google.visualization.arrayToDataTable([
-        ['Task', 'Groceries'],
-        ['Supermarket',     2],
-        ['Entertainment',      2],
-        ['Travel',  2],
-        ['Gas', 1],
-        ['Healthcare',    7],
-        ['Medicine',    7],
-        ['Clothing',    7],
-        ['Housing',    7],
-        ['Investments',    7],
-        ['Education',    7],
-        ['Childcare',    7],
-        ['Savings',    7],
-        ['Insurance',    7],
-        ['Transportation',    7],
-        ['Water',    7],
-        ['Electricity',    7],
-        ['Subsciptions',    7],
-        ['Tuition',    7],
-        ['Car Payments',    7],
-
-    ]);
-
-    var options = {
-        //title: 'My Daily Activities'
     };
 
-    var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+    
 
-    chart.draw(data, options);
+
+    function  drawChart(){
+        let data = new google.visualization.DataTable();
+        data.addColumn('string', 'Category');
+        data.addColumn('number', 'Count');
+        getCategories(data); // load data from API call
+        let chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        
+        let selectHandler = function() {
+            var selectedItem = chart.getSelection()[0];
+            if (selectedItem) {
+                let category = data.getValue(selectedItem.row, 0);
+                table = initTable(category);
+                console.log('Selected category is '+ category);
+            }
+          };
+
+        google.visualization.events.addListener(chart, 'select', selectHandler);
+       
+        let options = {};
+        chart.draw(data, options);
     }
+   
 
     $('.add-transaction-btn').on('click', function(e){
         e.preventDefault();
@@ -53,6 +88,8 @@ $(document).ready(function() {
             success: function(data){
                 $('.alert-info').show();
                 $('.info-msg').before('<span class="error">Successfully added transaction for category [' + data.category + '].</span>');
+                table = initTable('all');
+
             },
             error: function(error){
                 $('.alert-danger').show();
@@ -63,6 +100,8 @@ $(document).ready(function() {
 
     });
 
+    
+    
 });
 
 $(document).ajaxStart(function() {
