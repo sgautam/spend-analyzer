@@ -89,7 +89,7 @@
                 $('.alert-info').show();
                 $('.info-msg').before('<span class="error">Successfully added transaction for category [' + data.category + '].</span>');
                 table = initTable('all');
-                location.reload();
+                drawChart();
             },
             error: function(error){
                 $('.alert-danger').show();
