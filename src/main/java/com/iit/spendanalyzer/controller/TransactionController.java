@@ -25,8 +25,9 @@ public class TransactionController {
     private TransactionRepository transactionRepository;
     private Transaction2Repository transaction2Repository;
 
-    public TransactionController(TransactionRepository argTransactionRepository) {
+    public TransactionController(TransactionRepository argTransactionRepository,Transaction2Repository argTransaction2Repository) {
         this.transactionRepository = argTransactionRepository;
+        this.transaction2Repository = argTransaction2Repository;
     }
 
     @Value("${spring.application.name}")
@@ -53,7 +54,7 @@ public class TransactionController {
        if("all".equals(argCategory))
         return transaction2Repository.findAll();
 
-        return transaction2Repository.findTransactionEntitiesByCategoryOrderByDateDesc(argCategory);
+        return transaction2Repository.findTransaction2EntitiesByCategoryOrderByDateDesc(argCategory);
     }
 
     @GetMapping("/categories")

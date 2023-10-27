@@ -10,9 +10,9 @@ import com.iit.spendanalyzer.persistence.model.Transaction2Entity;
 
 public interface Transaction2Repository extends JpaRepository<Transaction2Entity, Long> {
 
-    List<Transaction2Entity> findTransactionEntitiesByCategoryOrderByDateDesc(String argCategory);
+    List<Transaction2Entity> findTransaction2EntitiesByCategoryOrderByDateDesc(String argCategory);
 
-    @Query("SELECT new com.iit.spendanalyzer.controller.model.CategoryCount(T.category, COUNT(T.category)) FROM TransactionEntity AS T GROUP BY T.category")
+    @Query("SELECT new com.iit.spendanalyzer.controller.model.CategoryCount(T.category, COUNT(T.category)) FROM Transaction2Entity AS T GROUP BY T.category")
     List<CategoryCount> countTotalTransactonsByCategory();
 
 }
