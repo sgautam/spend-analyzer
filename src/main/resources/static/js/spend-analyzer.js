@@ -21,9 +21,33 @@
                 { "data": 'date' }
             ]
         });
-      }
-      
+    }
+
+    function initTable2 (category) {
+        return $('#transactionTable2').dataTable( {
+            "paginate": true,
+            "retrieve": true,
+            "ajax": {
+                "url": "/transactions2",
+                "contentType": "application/json",
+                "type": "GET",
+                "data": function(d){
+                    d.category=category
+                },
+                "dataSrc": ''
+            },
+            "columns": [
+                { "data": 'id' },
+                { "data": 'category' },
+                { "data": 'description' },
+                { "data": 'amount' },
+                { "data": 'date' }
+            ]
+        });
+    }
+
     let table = initTable('all');
+    let table2 = initTable2('all');
 
     let hideMessage = function (){
         $(".error").remove();
