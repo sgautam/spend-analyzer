@@ -71,6 +71,26 @@
                                 <small id="descriptionHelp" class="form-text text-muted">Dollar amount.</small>
                             </div>
                             <button type="submit" class="btn btn-primary add-transaction-btn">Add</button>
+                            <div class="form-group">
+                                <form action="/transactions2" method="POST" id="addTransaction2Form" name="addTransaction2Form">
+                                    <label for="category2">Category</label>
+                                    <input type="text" class="form-control" id="category2" name="category2"
+                                        aria-describedby="category2Help" placeholder="Enter transaction category for Table 2">
+                                    <small id="category2Help" class="form-text text-muted">Transaction category for Table 2.</small>
+                            
+                                    <label for="description2">Description</label>
+                                    <input type="text" class="form-control" id="description2" name="description2"
+                                        placeholder="Description for Table 2" aria-describedby="description2Help">
+                                    <small id="description2Help" class="form-text text-muted">Transaction description for Table 2.</small>
+                            
+                                    <label for="amount2">Transaction amount</label>
+                                    <input type="text" class="form-control" id="amount2" name="amount2"
+                                        placeholder="Transaction Amount for Table 2" aria-describedby="amount2Help">
+                                    <small id="amount2Help" class="form-text text-muted">Dollar amount for Table 2.</small>                            
+                                    <button type="submit" class="btn btn-primary add-transaction2-btn">Add to Table 2</button>
+                                </form>
+                            </div>
+                            
                         </form>
                     </div>
                 </div>

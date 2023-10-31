@@ -76,15 +76,28 @@
         });
 
     };
-
-    
-
-
-    function  drawChart(){
+    $('.add-transaction2-btn').on('click', function (e) {
+        e.preventDefault();
+        hideMessage();
+        $.post({
+            url: $('#addTransaction2Form').attr('action'),
+            data: $('#addTransaction2Form').serialize(),
+            success: function (data) {
+                $('.alert-info').show();
+                $('.info-msg').before('<span class="error">Successfully added transaction to Table 2 for category [' + data.category + '].</span>');
+                table2 = initTable2('all');
+            },
+            error: function (error) {
+                $('.alert-danger').show();
+                $('.error-msg').before('<span class="error">Failed to add a transaction to Table 2... try again later.</span>');
+            }
+        });
+    });    
+    function drawChart() {
         let data = new google.visualization.DataTable();
         data.addColumn('string', 'Category');
         data.addColumn('number', 'Count');
-        getCategories(data); // load data from API call
+        getCategories(data); 
         let chart = new google.visualization.PieChart(document.getElementById('piechart'));
         
         let selectHandler = function() {
