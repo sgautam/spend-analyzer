@@ -1,9 +1,10 @@
   $(document).ready(function() {
-  
-    function initTable (category) {
-        return $('#transactionTable').dataTable( {
+    let category = 'all';
+    function initTable () {
+        return new DataTable('#transactionTable', {
             "paginate": true,
             "retrieve": true,
+            "responsive": true,
             "ajax": {
                 "url": "/transactions",
                 "contentType": "application/json",
@@ -23,7 +24,7 @@
         });
       }
       
-    let table = initTable('all');
+    let table = initTable();
 
     let hideMessage = function (){
         $(".error").remove();
@@ -66,9 +67,8 @@
         let selectHandler = function() {
             var selectedItem = chart.getSelection()[0];
             if (selectedItem) {
-                let category = data.getValue(selectedItem.row, 0);
-                table = initTable(category);
-                console.log('Selected category is '+ category);
+                category = data.getValue(selectedItem.row, 0);
+                table.ajax.reload(null, true);
             }
           };
 
@@ -88,8 +88,8 @@
             success: function(data){
                 $('.alert-info').show();
                 $('.info-msg').before('<span class="error">Successfully added transaction for category [' + data.category + '].</span>');
-                table = initTable('all');
-                drawChart();
+                category = 'all';
+                table.ajax.reload(drawChart, true);
             },
             error: function(error){
                 $('.alert-danger').show();
