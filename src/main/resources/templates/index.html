@@ -13,6 +13,13 @@
         <nav class="navbar navbar-light bglight flex-column flex-md-row bd-navbar">
             <span class="navbar-brand mb-0 h1">&nbsp;Welcome to <span th:text="${appName}">Our App</span></span>
         </nav>
+        
+        <div class="justify-content-center ajax-spinner row" style="display:none;">
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
         <div class="row justify-content-center">
             <div class="col-sm-8">
                 <div class="card">
@@ -31,11 +38,7 @@
                     </div>
                     <div class="card-body">
                         <form action="/transactions" method="POST" id="addTransactionForm" name="addTransactionForm">
-                            <div class="justify-content-center ajax-spinner" style="display:none;">
-                                <div class="spinner-border text-primary" role="status">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
-                            </div>
+                        
                             <div class="form-group msg-container-header">
                                 <div class="alert alert-info fade show" style="display:none;">
                                     <span class="info-msg"></span>
